@@ -1260,19 +1260,19 @@ public abstract class JSON implements JSONStreamAware, JSONAware {
         parser.handleResovleTask(value);
     }
     
-    public static void addMixIn(Type target, Type mixinSource ) {
+    public static void addMixInAnnotations(Type target, Type mixinSource) {
         mixInsMapper.put(target, mixinSource);
     }
 
-    public static void removeMixIn(Type target ) {
+    public static void removeMixInAnnotations(Type target) {
         mixInsMapper.put(target, null);
     }
 
-    public static void clearMixIn() {
+    public static void clearMixInAnnotations() {
         mixInsMapper.clear();
     }
 
-    public static Type getMixIn(Type target) {
+    public static Type getMixInAnnotations(Type target) {
         return mixInsMapper.get(target);
     }
 

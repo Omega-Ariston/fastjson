@@ -2904,7 +2904,7 @@ public class TypeUtils{
         A targetAnnotation = targetClass.getAnnotation(annotationClass);
 
         Class<?> mixInClass = null;
-        Type type = JSON.getMixIn(targetClass);
+        Type type = JSON.getMixInAnnotations(targetClass);
         if (type instanceof Class<?>) {
             mixInClass = (Class<?>) type;
         }
@@ -2941,7 +2941,7 @@ public class TypeUtils{
         Class<?> clazz = field.getDeclaringClass();
         A mixInAnnotation;
         Class<?> mixInClass = null;
-        Type type = JSON.getMixIn(clazz);
+        Type type = JSON.getMixInAnnotations(clazz);
         if (type instanceof Class<?>) {
             mixInClass = (Class<?>) type;
         }
@@ -2976,7 +2976,7 @@ public class TypeUtils{
         Class<?> clazz = method.getDeclaringClass();
         A mixInAnnotation;
         Class<?> mixInClass = null;
-        Type type = JSON.getMixIn(clazz);
+        Type type = JSON.getMixInAnnotations(clazz);
         if (type instanceof Class<?>) {
             mixInClass = (Class<?>) type;
         }
@@ -3012,7 +3012,7 @@ public class TypeUtils{
         Class<?> clazz = method.getDeclaringClass();
         Annotation[][] mixInAnnotations;
         Class<?> mixInClass = null;
-        Type type = JSON.getMixIn(clazz);
+        Type type = JSON.getMixInAnnotations(clazz);
         if (type instanceof Class<?>) {
             mixInClass = (Class<?>) type;
         }
@@ -3048,7 +3048,7 @@ public class TypeUtils{
         Class<?> clazz = constructor.getDeclaringClass();
         Annotation[][] mixInAnnotations;
         Class<?> mixInClass = null;
-        Type type = JSON.getMixIn(clazz);
+        Type type = JSON.getMixInAnnotations(clazz);
         if (type instanceof Class<?>) {
             mixInClass = (Class<?>) type;
         }
