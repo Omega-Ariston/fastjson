@@ -34,6 +34,7 @@ import com.alibaba.fastjson.parser.deserializer.FieldTypeResolver;
 import com.alibaba.fastjson.parser.deserializer.ParseProcess;
 import com.alibaba.fastjson.serializer.*;
 import com.alibaba.fastjson.util.IOUtils;
+import com.alibaba.fastjson.util.IdentityHashMap;
 import com.alibaba.fastjson.util.TypeUtils;
 
 /**
@@ -70,6 +71,9 @@ public abstract class JSON implements JSONStreamAware, JSONAware {
     public static String           DEFFAULT_DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
     public static int              DEFAULT_PARSER_FEATURE;
     public static int              DEFAULT_GENERATE_FEATURE;
+
+    private static final IdentityHashMap<Type, Type> mixInsMapper = new IdentityHashMap<Type,Type>();
+    
     static {
         int features = 0;
         features |= Feature.AutoCloseSource.getMask();
@@ -1254,6 +1258,22 @@ public abstract class JSON implements JSONStreamAware, JSONAware {
 
     public static <T> void handleResovleTask(DefaultJSONParser parser, T value) {
         parser.handleResovleTask(value);
+    }
+    
+    public static void addMixIn(Type target, Type mixinSource ) {
+        mixInsMapper.put(target, mixinSource);
+    }
+
+    public static void removeMixIn(Type target ) {
+        mixInsMapper.put(target, null);
+    }
+
+    public static void clearMixIn() {
+        mixInsMapper.clear();
+    }
+
+    public static Type getMixIn(Type target) {
+        return mixInsMapper.get(target);
     }
 
     public final static String VERSION = "1.2.60";

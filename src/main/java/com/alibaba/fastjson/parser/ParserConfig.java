@@ -636,7 +636,7 @@ public class ParserConfig {
             }
 
             Class<?> deserClass = null;
-            JSONType jsonType = clazz.getAnnotation(JSONType.class);
+            JSONType jsonType = TypeUtils.getAnnotation( clazz, JSONType.class );
             if (jsonType != null) {
                 deserClass = jsonType.deserializer();
                 try {
