@@ -1261,11 +1261,14 @@ public abstract class JSON implements JSONStreamAware, JSONAware {
     }
     
     public static void addMixInAnnotations(Type target, Type mixinSource) {
+        JSON.removeMixInAnnotations(target);
         mixInsMapper.put(target, mixinSource);
     }
 
     public static void removeMixInAnnotations(Type target) {
         mixInsMapper.put(target, null);
+        ParserConfig.global.putDeserializer(target, null);
+        SerializeConfig.getGlobalInstance().put(target, null);
     }
 
     public static void clearMixInAnnotations() {
