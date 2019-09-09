@@ -59,7 +59,7 @@ public class DateTest extends TestCase {
         Assert.assertEquals(true, serializer.isEnabled(SerializerFeature.UseISO8601DateFormat));
         serializer.write(new Date(1294502400000L));
 
-        Assert.assertEquals("\"2011-01-09+08:00\"", out.toString());
+        Assert.assertEquals("\"2011-01-09T00:00:00+08:00\"", out.toString());
     }
 
     public void test_4() throws Exception {
@@ -71,7 +71,7 @@ public class DateTest extends TestCase {
         Assert.assertEquals(true, serializer.isEnabled(SerializerFeature.UseISO8601DateFormat));
         serializer.write(new Date(1294502400000L));
 
-        Assert.assertEquals("'2011-01-09+08:00'", out.toString());
+        Assert.assertEquals("'2011-01-09T00:00:00+08:00'", out.toString());
     }
 
     public void test_5() throws Exception {
