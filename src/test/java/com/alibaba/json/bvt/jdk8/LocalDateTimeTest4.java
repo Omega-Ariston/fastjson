@@ -2,6 +2,7 @@ package com.alibaba.json.bvt.jdk8;
 
 import java.time.LocalDateTime;
 
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.junit.Assert;
 
 import com.alibaba.fastjson.JSON;
@@ -15,7 +16,7 @@ public class LocalDateTimeTest4 extends TestCase {
         VO vo = new VO();
         vo.setDate(dateTime);
         
-        String text = JSON.toJSONString(vo);
+        String text = JSON.toJSONString(vo, SerializerFeature.UseISO8601DateFormat);
         Assert.assertEquals("{\"date\":\"2016-05-06T09:03:16\"}", text);
         
         VO vo1 = JSON.parseObject(text, VO.class);

@@ -428,14 +428,15 @@ public class Jdk8DateCodec extends ContextObjectDeserializer implements ObjectSe
             }
 
             if (fieldType == LocalDateTime.class) {
-                final int mask = SerializerFeature.UseISO8601DateFormat.getMask();
+                final int iso8601Mask = SerializerFeature.UseISO8601DateFormat.getMask();
+                final int useDateFormatMask = SerializerFeature.WriteDateUseDateFormat.getMask();
                 LocalDateTime dateTime = (LocalDateTime) object;
                 String format = serializer.getDateFormatPattern();
 
-                if (format == null) {
-                    if ((features & mask) != 0 || serializer.isEnabled(SerializerFeature.UseISO8601DateFormat)) {
-                        format = formatter_iso8601_pattern;
-                    } else {
+                if (format != null) {
+                    write(out, dateTime, format);
+                } else {
+                    if ((features & iso8601Mask) != 0 || serializer.isEnabled(SerializerFeature.UseISO8601DateFormat)) {
                         int nano = dateTime.getNano();
                         if (nano == 0) {
                             format = formatter_iso8601_pattern;
@@ -444,16 +445,14 @@ public class Jdk8DateCodec extends ContextObjectDeserializer implements ObjectSe
                         } else {
                             format = formatter_iso8601_pattern_29;
                         }
-                    }
-                }
 
-                if (format != null) {
-                    write(out, dateTime, format);
-                } else if (out.isEnabled(SerializerFeature.WriteDateUseDateFormat)) {
-                    //使用固定格式转化时间
-                    write(out, dateTime, JSON.DEFFAULT_DATE_FORMAT);
-                } else {
-                    out.writeLong(dateTime.atZone(JSON.defaultTimeZone.toZoneId()).toInstant().toEpochMilli());
+                        write(out, dateTime, format);
+                    } else if ((features & useDateFormatMask) != 0 || serializer.isEnabled(SerializerFeature.WriteDateUseDateFormat)) {
+                        //使用固定格式转化时间
+                        write(out, dateTime, JSON.DEFFAULT_DATE_FORMAT);
+                    } else {
+                        out.writeLong(dateTime.atZone(JSON.defaultTimeZone.toZoneId()).toInstant().toEpochMilli());
+                    }
                 }
             } else {
                 out.writeString(object.toString());

@@ -9,15 +9,15 @@ import java.time.LocalDateTime;
 public class Issue1892 extends TestCase {
     public void test_for_issue() throws Exception {
         assertEquals("\"2018-10-10T00:00:00\"",
-            JSON.toJSONString(
-                    LocalDateTime.of(2018, 10, 10, 0, 0)
-            )
+                JSON.toJSONString(
+                        LocalDateTime.of(2018, 10, 10, 0, 0), SerializerFeature.UseISO8601DateFormat
+                )
         );
     }
 
     public void test_for_issue_1() throws Exception {
         String json = JSON.toJSONString(
-                LocalDateTime.of(2018, 10, 10, 0, 0, 40, 788000000)
+                LocalDateTime.of(2018, 10, 10, 0, 0, 40, 788000000), SerializerFeature.UseISO8601DateFormat
         );
         assertEquals("\"2018-10-10T00:00:40.788\"", json);
     }

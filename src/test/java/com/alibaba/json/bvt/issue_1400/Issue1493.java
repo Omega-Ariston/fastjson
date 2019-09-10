@@ -18,7 +18,6 @@ public class Issue1493 extends TestCase {
     }
 
     public void test_for_issue() throws Exception {
-
         TestBean test = new TestBean();
         String stime2 = "2017-09-22T15:08:56";
 
@@ -30,8 +29,11 @@ public class Issue1493 extends TestCase {
         test.setTime2(time2);
         String t1 = JSON.toJSONString(time1, SerializerFeature.WriteDateUseDateFormat);
 
+        String pattern1 = JSON.DEFFAULT_DATE_FORMAT;
+        String t2 = DateTimeFormatter.ofPattern(pattern1, Locale.CHINA).format(time2);
+
         String json = JSON.toJSONString(test, SerializerFeature.WriteDateUseDateFormat);
-        Assert.assertEquals("{\"time1\":"+t1+",\"time2\":\""+stime2+"\"}",json);
+        Assert.assertEquals("{\"time1\":"+t1+",\"time2\":\""+t2+"\"}",json);
 
 
         //String default_format = JSON.DEFFAULT_LOCAL_DATE_TIME_FORMAT;
@@ -39,11 +41,10 @@ public class Issue1493 extends TestCase {
         //String stime1 = DateTimeFormatter.ofPattern(JSON.DEFFAULT_LOCAL_DATE_TIME_FORMAT, Locale.CHINA).format(time1);
 
         json = JSON.toJSONString(test, SerializerFeature.WriteDateUseDateFormat);
-        Assert.assertEquals("{\"time1\":"+ JSON.toJSONString(time1, SerializerFeature.WriteDateUseDateFormat) +",\"time2\":\""+stime2+"\"}",json);
+        Assert.assertEquals("{\"time1\":"+ JSON.toJSONString(time1, SerializerFeature.WriteDateUseDateFormat) +",\"time2\":\""+t2+"\"}",json);
 
-
-        String pattern = "yyyy-MM-dd'T'HH:mm:ss";
-        String stime1 = DateTimeFormatter.ofPattern(pattern, Locale.CHINA).format(time1);
+        String pattern2 = "yyyy-MM-dd'T'HH:mm:ss";
+        String stime1 = DateTimeFormatter.ofPattern(pattern2, Locale.CHINA).format(time1);
 
         json = JSON.toJSONStringWithDateFormat(test, "yyyy-MM-dd'T'HH:mm:ss", SerializerFeature.WriteDateUseDateFormat);
         Assert.assertEquals("{\"time1\":\""+stime1+"\",\"time2\":\""+stime2+"\"}",json);
