@@ -2379,14 +2379,17 @@ public final class JSONScanner extends JSONLexerBase {
                 }
                 bracketCnt++;
             } else if (ch == '{' && valid) {
-                {
-                    int index = ++bp;
-                    this.ch = (index >= text.length() //
-                            ? EOI //
-                            : text.charAt(index));
+                //引号内的'{'应该跳过不处理
+                if (quote) {
+                    continue;
                 }
-
+                bp = i + 1;
+                this.ch = (bp >= text.length()
+                    ? EOI
+                    : text.charAt(bp));
                 skipObject(valid);
+                //调用skipObject之后，里面处理过的字符不再处理
+                i = bp - 2;
             } else if (ch == ']') {
                 if (quote) {
                     continue;
