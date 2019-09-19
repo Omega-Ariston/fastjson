@@ -232,6 +232,8 @@ public final class JSONScanner extends JSONLexerBase {
                     char c = charAt(bp + i);
                     if (c == '+') {
                         plusIndex = i;
+                    } else if (c == '-') { // support negative value like /Date(-1+0800)
+                        // continue
                     } else if (c < '0' || c > '9') {
                         break;
                     }
